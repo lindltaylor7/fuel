@@ -39,27 +39,31 @@ function HomePage() {
             </div>
 
             <table className="table-auto border-collapse border border-gray-300 w-full text-left mt-4">
-                <thead class="bg-gray-100">
+                <thead className="bg-gray-100">
                     <tr>
-                        <th class="border border-gray-300 px-4 py-2">Equipo</th>
-                        <th class="border border-gray-300 px-4 py-2">
+                        <th className="border border-gray-300 px-4 py-2">
+                            Equipo
+                        </th>
+                        <th className="border border-gray-300 px-4 py-2">
                             Combustible
                         </th>
-                        <th class="border border-gray-300 px-4 py-2">Agua</th>
-                        <th class="border border-gray-300 px-4 py-2">
+                        <th className="border border-gray-300 px-4 py-2">
+                            Agua
+                        </th>
+                        <th className="border border-gray-300 px-4 py-2">
                             Hora de agotamiento del combustible
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     {vehicles.map((vehicle) => (
-                        <tr>
-                            <td class="border border-gray-300 px-4 py-2">
+                        <tr key={vehicle.id}>
+                            <td className="border border-gray-300 px-4 py-2">
                                 {vehicle.name}
                             </td>
-                            <td class="border border-gray-300 px-4 py-2"></td>
-                            <td class="border border-gray-300 px-4 py-2"></td>
-                            <td class="border border-gray-300 px-4 py-2"></td>
+                            <td className="border border-gray-300 px-4 py-2"></td>
+                            <td className="border border-gray-300 px-4 py-2"></td>
+                            <td className="border border-gray-300 px-4 py-2"></td>
                         </tr>
                     ))}
                 </tbody>
