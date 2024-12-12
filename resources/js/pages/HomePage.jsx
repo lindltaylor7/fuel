@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import InsertModal from "../components/InsertModal";
+import VehicleModal from "../components/VehicleModal";
 
 function HomePage() {
     const [vehicles, setVehicles] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isVehicleModalOpen, setIsVehicleModalOpen] = useState(false);
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
+
+    const openVehicleModal = () => setIsVehicleModalOpen(true);
+    const closeVehicleModal = () => setIsVehicleModalOpen(false);
 
     useEffect(() => {
         axios
@@ -24,18 +29,37 @@ function HomePage() {
         setIsModalOpen(true);
     };
 
+    const showVehicleModal = () => {
+        setIsVehicleModalOpen(true);
+    };
+
+    const deleteVehicle = (id) => {
+        if (window.confirm("¿Estás seguro de eliminar este equipo?")) {
+            axios
+                .delete(`/api/vehicles/${id}`)
+                .then((result) => {
+                    setVehicles(vehicles.filter((v) => v.id !== id));
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    };
+
     return (
         <div className="px-3">
             <h1 className="text-4xl font-bold mt-4">Registro de Combustible</h1>
 
-            <div className="w-full">
-                <InsertModal
-                    isOpen={isModalOpen}
-                    onClose={closeModal}
-                    vehicles={vehicles}
-                />
+            <div className="w-full mt-3">
                 <button
-                    className="bg-blue-600 p-2 text-white rounded"
+                    className="bg-blue-600 p-2  text-white rounded"
+                    onClick={showVehicleModal}
+                >
+                    Nuevo equipo
+                </button>
+
+                <button
+                    className="bg-blue-600 p-2 mx-1 text-white rounded"
                     onClick={showModal}
                 >
                     Crear nuevo registro
@@ -49,14 +73,12 @@ function HomePage() {
                             Equipo
                         </th>
                         <th className="border border-gray-300 px-4 py-2">
-                            Combustible
+                            Max Galon
                         </th>
                         <th className="border border-gray-300 px-4 py-2">
-                            Agua
+                            Consumo
                         </th>
-                        <th className="border border-gray-300 px-4 py-2">
-                            Hora de agotamiento del combustible
-                        </th>
+                        <th>Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,13 +87,34 @@ function HomePage() {
                             <td className="border border-gray-300 px-4 py-2">
                                 {vehicle.name}
                             </td>
-                            <td className="border border-gray-300 px-4 py-2"></td>
-                            <td className="border border-gray-300 px-4 py-2"></td>
-                            <td className="border border-gray-300 px-4 py-2"></td>
+                            <td className="border border-gray-300 px-4 py-2">
+                                {vehicle.max_gallon}
+                            </td>
+                            <td className="border border-gray-300 px-4 py-2">
+                                {vehicle.intake}
+                            </td>
+                            <td className="border border-gray-300 px-4 py-2">
+                                <button
+                                    className="bg-red-400 text-white rounded p-2"
+                                    onClick={() => deleteVehicle(vehicle.id)}
+                                >
+                                    Eliminar
+                                </button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+            <InsertModal
+                isOpen={isModalOpen}
+                onClose={closeModal}
+                vehicles={vehicles}
+            />
+            <VehicleModal
+                isOpen={isVehicleModalOpen}
+                onClose={closeVehicleModal}
+                vehicles={vehicles}
+            />
         </div>
     );
 }

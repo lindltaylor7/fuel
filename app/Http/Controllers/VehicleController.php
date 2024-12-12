@@ -36,7 +36,14 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        $vehicle = Vehicle::create([
+            'name' => $request->get('name'),
+            'max_gallon' => $request->get('max_gallon'),
+            'intake' => $request->get('intake')
+        ]);
+        return response()->json([
+            'msg' => 'Successfully created'
+        ]);
     }
 
     /**
@@ -79,8 +86,14 @@ class VehicleController extends Controller
      * @param  \App\Models\Vehicle  $vehicle
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vehicle $vehicle)
+    public function destroy($id)
     {
-        //
+        $vehicle = Vehicle::find($id);
+
+        $vehicle->delete();
+
+        return response()->json([
+            'msg' => 'Successfully created'
+        ]);
     }
 }

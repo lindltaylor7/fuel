@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/vehicles', [VehicleController::class, 'index']);
 Route::post('/vehicles', [VehicleController::class, 'store']);
+Route::delete('/vehicles/{id}', [VehicleController::class, 'destroy']);
