@@ -1,13 +1,34 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-function InsertModal({ isOpen, onClose, title }) {
+function InsertModal({ isOpen, onClose, title, vehicles }) {
     const { register, handleSubmit, reset } = useForm();
 
     const [time, setTime] = useState(0);
 
+    const convertDecimalToTime = (decimal) => {
+        const currentDate = new Date();
+        const hours = Math.floor(decimal);
+        const minutes = Math.floor((decimal - hours) * 60);
+        const seconds = Math.floor(((decimal - hours) * 60 - minutes) * 60);
+
+        currentDate.setHours(hours, minutes, seconds, 0);
+
+        return currentDate.toLocaleString();
+    };
+
     const onSubmit = handleSubmit((data) => {
-        setTime(Number(data.water) + Number(data.fuel));
+        var vehicleSelected = vehicles.find((v) => v.id == data.vehicle);
+
+        var numberCalculated =
+            ((Number(data.fuel) - 10) * Number(vehicleSelected.max_gallon)) /
+                100 /
+                Number(vehicleSelected.intake) +
+            7.5;
+
+        var numberOnDate = convertDecimalToTime(numberCalculated);
+
+        setTime(numberOnDate);
     });
 
     if (!isOpen) return null;
@@ -31,11 +52,18 @@ function InsertModal({ isOpen, onClose, title }) {
                     <form onSubmit={onSubmit}>
                         <div className="mt-2">
                             <label htmlFor="">Nombre del equipo</label>
-                            <input
-                                {...register("vehicle")}
-                                type="text"
+
+                            <select
                                 className="bg-zinc-300 p-2 w-full rounded"
-                            />
+                                {...register("vehicle")}
+                            >
+                                {vehicles.map((vehicle) => (
+                                    <option key={vehicle.id} value={vehicle.id}>
+                                        {vehicle.name} - Max Galón(
+                                        {vehicle.max_gallon})
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                         <div className="mt-2">
                             <label htmlFor="">
@@ -56,6 +84,10 @@ function InsertModal({ isOpen, onClose, title }) {
                                 type="number"
                                 className="bg-zinc-300 p-2 w-full rounded"
                             />
+                        </div>
+                        <div className="mt-2">
+                            <label htmlFor="">Inicio de turno</label>
+                            <p>7,5</p>
                         </div>
                         <div className="mt-2">
                             <label htmlFor="">

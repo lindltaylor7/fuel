@@ -29,7 +29,11 @@ function HomePage() {
             <h1 className="text-4xl font-bold mt-4">Registro de Combustible</h1>
 
             <div className="w-full">
-                <InsertModal isOpen={isModalOpen} onClose={closeModal} />
+                <InsertModal
+                    isOpen={isModalOpen}
+                    onClose={closeModal}
+                    vehicles={vehicles}
+                />
                 <button
                     className="bg-blue-600 p-2 text-white rounded"
                     onClick={showModal}
