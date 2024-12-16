@@ -20,7 +20,7 @@ function VehicleModal({ isOpen, onClose, vehicles }) {
     const onSubmit = handleSubmit((data) => {
         console.log(data);
         axios
-            .post("/api/vehicles", data)
+            .post("/fuel/public/api/vehicles", data)
             .then((result) => {
                 console.log("Vehicle created successfully");
                 vehicles.push(data);

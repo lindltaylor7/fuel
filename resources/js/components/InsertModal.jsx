@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 function InsertModal({ isOpen, onClose, title, vehicles }) {
     const { register, handleSubmit, reset } = useForm();
 
     const [time, setTime] = useState(0);
+    const [performance, setPerformance] = useState(0);
 
     const convertDecimalToTime = (decimal) => {
         const currentDate = new Date();
@@ -20,15 +22,34 @@ function InsertModal({ isOpen, onClose, title, vehicles }) {
     const onSubmit = handleSubmit((data) => {
         var vehicleSelected = vehicles.find((v) => v.id == data.vehicle);
 
-        var numberCalculated =
+        var performance =
             ((Number(data.fuel) - 10) * Number(vehicleSelected.max_gallon)) /
-                100 /
-                Number(vehicleSelected.intake) +
-            7.5;
+            100 /
+            Number(vehicleSelected.intake);
+
+        setPerformance(performance.toFixed(2));
+
+        var numberCalculated = Number(performance) + 7.5;
 
         var numberOnDate = convertDecimalToTime(numberCalculated);
 
         setTime(numberOnDate);
+
+        const fd = new FormData();
+
+        fd.append("vehicle_id", vehicleSelected.id);
+        fd.append("fuel", data.fuel);
+        fd.append("performance", performance);
+        fd.append("date_estimated", numberOnDate);
+
+        axios
+            .post("/fuel/public/api/markings", fd)
+            .then((result) => {
+                onClose();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     });
 
     if (!isOpen) return null;
@@ -90,6 +111,10 @@ function InsertModal({ isOpen, onClose, title, vehicles }) {
                             <p>7,5</p>
                         </div>
                         <div className="mt-2">
+                            <label htmlFor="">Rendimiento</label>
+                            <p>{performance}</p>
+                        </div>
+                        <div className="mt-2">
                             <label htmlFor="">
                                 Fecha y hora de agotamiento del combustible
                             </label>
@@ -113,7 +138,7 @@ function InsertModal({ isOpen, onClose, title, vehicles }) {
                         className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
                         onClick={onSubmit}
                     >
-                        Confirmar
+                        Registrar
                     </button>
                 </div>
             </div>
