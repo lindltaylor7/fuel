@@ -12,7 +12,10 @@ function HomePage() {
     const [isVehicleModalOpen, setIsVehicleModalOpen] = useState(false);
 
     const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
+    const closeModal = () => {
+        setIsModalOpen(false);
+        getAllMarkings();
+    };
 
     const openVehicleModal = () => setIsVehicleModalOpen(true);
     const closeVehicleModal = () => {
@@ -31,8 +34,7 @@ function HomePage() {
             });
     };
 
-    useEffect(() => {
-        getAllVehicles();
+    const getAllMarkings = () => {
         axios
             .get("/fuel/public/api/markings")
             .then((result) => {
@@ -41,6 +43,11 @@ function HomePage() {
             .catch((err) => {
                 console.log(err);
             });
+    };
+
+    useEffect(() => {
+        getAllVehicles();
+        getAllMarkings();
     }, []);
 
     const showModal = () => {
@@ -69,7 +76,7 @@ function HomePage() {
             <h1 className="text-4xl font-bold mt-4">Registro de Combustible</h1>
 
             <div className="grid grid-cols-12 gap-4">
-                <div class="col-span-12 md:col-span-6">
+                <div className="col-span-12 md:col-span-6">
                     <div className="w-full mt-3">
                         <button
                             className="bg-blue-600 p-2  text-white rounded"
@@ -129,7 +136,7 @@ function HomePage() {
                         </table>
                     </div>
                 </div>
-                <div class="col-span-12 md:col-span-6">
+                <div className="col-span-12 md:col-span-6">
                     <button
                         className="bg-blue-600 p-2 mx-1 text-white rounded"
                         onClick={showModal}
