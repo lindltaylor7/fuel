@@ -40,7 +40,7 @@ function VehicleModal({ isOpen, onClose, vehicles }) {
         >
             <div className="bg-white rounded-lg shadow-lg w-11/12 md:w-1/3">
                 <div className="border-b p-4 flex justify-between items-center">
-                    <h3 className="text-lg font-bold">Nuevo equipo</h3>
+                    <h3 className="text-lg font-bold">Nuevos equipos</h3>
                     <button
                         id="close-modal"
                         className="text-gray-500 hover:text-gray-800"
