@@ -23,7 +23,6 @@ function VehicleModal({ isOpen, onClose, vehicles }) {
             .post("/fuel/public/api/vehicles", data)
             .then((result) => {
                 console.log("Vehicle created successfully");
-                vehicles.push(data);
                 reset();
                 onClose();
             })
@@ -50,7 +49,7 @@ function VehicleModal({ isOpen, onClose, vehicles }) {
                     </button>
                 </div>
                 <div className="p-4">
-                    <form onSubmit={onSubmit}>
+                    <form>
                         <div className="mt-2">
                             <label htmlFor="">Nombre del equipo</label>
 
