@@ -30,3 +30,4 @@ Route::delete('/vehicles/{id}', [VehicleController::class, 'destroy']);
 
 Route::get('/markings', [MarkingController::class, 'index']);
 Route::post('/markings', [MarkingController::class, 'store']);
+Route::delete('/markings/{id}', [MarkingController::class, 'destroy']);

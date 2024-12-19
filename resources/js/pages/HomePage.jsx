@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../axiosConfig";
 import InsertModal from "../components/InsertModal";
 import VehicleModal from "../components/VehicleModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,8 +24,8 @@ function HomePage() {
     };
 
     const getAllVehicles = () => {
-        axios
-            .get("/fuel/public/api/vehicles")
+        axiosInstance
+            .get("/vehicles")
             .then((result) => {
                 setVehicles(result.data);
             })
@@ -35,8 +35,8 @@ function HomePage() {
     };
 
     const getAllMarkings = () => {
-        axios
-            .get("/fuel/public/api/markings")
+        axiosInstance
+            .get("/markings")
             .then((result) => {
                 setMarkings(result.data);
             })
@@ -60,10 +60,23 @@ function HomePage() {
 
     const deleteVehicle = (id) => {
         if (window.confirm("¿Estás seguro de eliminar este equipo?")) {
-            axios
-                .delete(`/fuel/public/api/vehicles/${id}`)
+            axiosInstance
+                .delete(`/vehicles/${id}`)
                 .then((result) => {
                     setVehicles(vehicles.filter((v) => v.id !== id));
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    };
+
+    const deleteMarking = (id) => {
+        if (window.confirm("¿Estás seguro de eliminar esta marcación?")) {
+            axiosInstance
+                .delete(`/markings/${id}`)
+                .then((result) => {
+                    setMarkings(markings.filter((m) => m.id !== id));
                 })
                 .catch((err) => {
                     console.log(err);
@@ -193,7 +206,7 @@ function HomePage() {
                                                     <button
                                                         className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                                                         onClick={() =>
-                                                            deleteVehicle(
+                                                            deleteMarking(
                                                                 marking.id
                                                             )
                                                         }

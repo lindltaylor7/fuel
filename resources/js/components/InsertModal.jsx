@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import axiosInstance from "../axiosConfig";
 
 function InsertModal({ isOpen, onClose, title, vehicles }) {
     const { register, handleSubmit, reset } = useForm();
@@ -42,8 +42,8 @@ function InsertModal({ isOpen, onClose, title, vehicles }) {
         fd.append("performance", performance);
         fd.append("date_estimated", numberOnDate);
 
-        axios
-            .post("/fuel/public/api/markings", fd)
+        axiosInstance
+            .post("/markings", fd)
             .then((result) => {
                 onClose();
             })

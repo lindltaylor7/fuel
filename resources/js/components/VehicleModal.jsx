@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import axiosInstance from "../axiosConfig";
 function VehicleModal({ isOpen, onClose, vehicles }) {
     const { register, handleSubmit, reset } = useForm();
 
@@ -19,8 +19,8 @@ function VehicleModal({ isOpen, onClose, vehicles }) {
 
     const onSubmit = handleSubmit((data) => {
         console.log(data);
-        axios
-            .post("/fuel/public/api/vehicles", data)
+        axiosInstance
+            .post("/vehicles", data)
             .then((result) => {
                 console.log("Vehicle created successfully");
                 reset();

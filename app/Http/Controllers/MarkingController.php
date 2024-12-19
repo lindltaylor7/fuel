@@ -89,8 +89,14 @@ class MarkingController extends Controller
      * @param  \App\Models\Marking  $marking
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Marking $marking)
+    public function destroy($id)
     {
-        //
+        $marking = Marking::find($id);
+
+        $marking->delete();
+
+        return response()->json([
+            'msg' => 'Successfully created'
+        ]);
     }
 }
