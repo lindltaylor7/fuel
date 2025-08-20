@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Marking extends Model
+class Status extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['vehicle_id', 'fuel', 'performance', 'date_estimated'];
+    protected $fillable = ['vehicle_id', 'fuel', 'water', 'cleaning', 'shift', 'comments'];
 
     /**
      * Get the vehicle that owns the marking.

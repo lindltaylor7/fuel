@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Marking;
-use DateTime;
+use App\Models\Fluid;
 use Illuminate\Http\Request;
 
-class MarkingController extends Controller
+class FluidController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,8 @@ class MarkingController extends Controller
      */
     public function index()
     {
-        $markings = Marking::with('vehicle')->get();
-        return response()->json($markings);
+        $fluids = Fluid::with('vehicle')->get();
+        return response()->json($fluids);
     }
 
     /**
@@ -37,11 +36,14 @@ class MarkingController extends Controller
      */
     public function store(Request $request)
     {
-        $marking = Marking::create([
+        $fluid = Fluid::create([
             "vehicle_id" => $request->get('vehicle_id'),
-            "fuel" => $request->get('fuel'),
-            "performance" => $request->get('performance'),
-            "date_estimated" => DateTime::createFromFormat('d/m/Y, H:i:s', $request->get('date_estimated'))
+            "refrigerant" => $request->get('refrigerant'),
+            "compressor" => $request->get('compressor'),
+            "engine" => $request->get('engine'),
+            "hydraulic" => $request->get('hydraulic'),
+            "shift" => $request->get('shift'),
+            "comments" => $request->get('comments')
         ]);
 
         return response()->json([
@@ -52,10 +54,10 @@ class MarkingController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Marking  $marking
+     * @param  \App\Models\Fluid  $fluid
      * @return \Illuminate\Http\Response
      */
-    public function show(Marking $marking)
+    public function show(Fluid $fluid)
     {
         //
     }
@@ -63,10 +65,10 @@ class MarkingController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Marking  $marking
+     * @param  \App\Models\Fluid  $fluid
      * @return \Illuminate\Http\Response
      */
-    public function edit(Marking $marking)
+    public function edit(Fluid $fluid)
     {
         //
     }
@@ -75,10 +77,10 @@ class MarkingController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Marking  $marking
+     * @param  \App\Models\Fluid  $fluid
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Marking $marking)
+    public function update(Request $request, Fluid $fluid)
     {
         //
     }
@@ -86,14 +88,14 @@ class MarkingController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Marking  $marking
+     * @param  \App\Models\Fluid  $fluid
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $marking = Marking::find($id);
+        $fluid = Fluid::find($id);
 
-        $marking->delete();
+        $fluid->delete();
 
         return response()->json([
             'msg' => 'Successfully created'

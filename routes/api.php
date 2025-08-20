@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\FluidController;
 use App\Http\Controllers\MarkingController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,3 +33,11 @@ Route::delete('/vehicles/{id}', [VehicleController::class, 'destroy']);
 Route::get('/markings', [MarkingController::class, 'index']);
 Route::post('/markings', [MarkingController::class, 'store']);
 Route::delete('/markings/{id}', [MarkingController::class, 'destroy']);
+
+Route::get('/fluids', [FluidController::class, 'index']);
+Route::post('/fluids', [FluidController::class, 'store']);
+Route::post('/fluids/{id}', [FluidController::class, 'destroy']);
+
+Route::get('/statuses', [StatusController::class, 'index']);
+Route::post('/statuses', [StatusController::class, 'store']);
+Route::post('/statuses/{id}', [StatusController::class, 'destroy']);
